@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sejiwa — Ruang Aman Kesehatan Mental untuk Semua Usia</title>
+  <meta name="description" content="Sejiwa: check-in emosi harian, jurnal dengan AI empatik berbahasa Indonesia, dukungan sebaya, dan rujukan ke layanan profesional. Untuk usia 13–40+." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#7C3AED',
+            secondary: '#A78BFA',
+            wellness: '#059669',
+            cream: '#F5F3FF',
+            ink: '#2E1065',
+          },
+          fontFamily: {
+            heading: ['Lora', 'serif'],
+            body: ['Raleway', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Raleway', sans-serif; background: #F5F3FF; color: #2E1065; }
+    h1, h2, h3 { font-family: 'Lora', serif; }
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+    :focus-visible { outline: 2px solid #7C3AED; outline-offset: 2px; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <header class="fixed top-4 left-4 right-4 z-50">
+    <nav class="mx-auto max-w-6xl flex items-center justify-between rounded-2xl bg-white/90 backdrop-blur border border-secondary/50 px-5 py-3 shadow-sm" aria-label="Navigasi utama">
+      <a href="#hero" class="font-heading text-xl font-bold text-ink cursor-pointer">Sejiwa</a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-ink/80">
+        <a href="#masalah" class="hover:text-primary transition-colors duration-200 cursor-pointer">Kenapa Sejiwa</a>
+        <a href="#fitur" class="hover:text-primary transition-colors duration-200 cursor-pointer">Fitur</a>
+        <a href="#segmen" class="hover:text-primary transition-colors duration-200 cursor-pointer">Untuk Semua Usia</a>
+        <a href="#keamanan" class="hover:text-primary transition-colors duration-200 cursor-pointer">Keamanan</a>
+        <a href="#faq" class="hover:text-primary transition-colors duration-200 cursor-pointer">FAQ</a>
+      </div>
+      <a href="#daftar" class="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 transition-colors duration-200 cursor-pointer">Gabung Waiting List</a>
+    </nav>
+  </header>
+
+  <section id="hero" class="relative overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
+    <div class="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-secondary/40 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-wellness/10 blur-3xl" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-6 text-center">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white border border-secondary px-4 py-1.5 text-sm font-medium text-ink/80">
+        <i data-lucide="heart-handshake" class="h-4 w-4 text-primary" aria-hidden="true"></i>
+        Ruang aman kesehatan mental orang Indonesia
+      </span>
+      <h1 class="mx-auto mt-6 max-w-3xl text-4xl font-bold leading-tight md:text-5xl text-ink">
+        Kamu tidak sendirian. <span class="text-primary">Ngobrol pelan-pelan, mulai hari ini.</span>
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg text-ink/75">
+        Sejiwa bantu kamu check-in perasaan tiap hari, menulis jurnal dengan AI yang hangat dan sabar,
+        terhubung dengan teman seperjuangan, dan sampai ke bantuan profesional kalau memang butuh.
+        Untuk usia 13 sampai 40+ — semua boleh di sini.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="#daftar" class="rounded-full bg-wellness px-8 py-3.5 text-base font-semibold text-white shadow-md hover:bg-wellness/90 transition-colors duration-200 cursor-pointer">
+          Daftar gratis sekarang
+        </a>
+        <a href="#fitur" class="rounded-full border-2 border-primary px-8 py-3 text-base font-semibold text-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
+          Lihat cara kerjanya
+        </a>
+        <a href="app.html" class="rounded-full border-2 border-wellness px-8 py-3 text-base font-semibold text-wellness hover:bg-wellness hover:text-white transition-colors duration-200 cursor-pointer">
+          Coba demo aplikasi
+        </a>
+      </div>
+      <dl class="mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="rounded-2xl bg-white border border-secondary/50 p-5 shadow-sm">
+          <dt class="text-sm text-ink/70">Remaja Indonesia dengan masalah mental (12 bulan)</dt>
+          <dd class="mt-1 font-heading text-3xl font-bold text-primary">15,5 juta</dd>
+        </div>
+        <div class="rounded-2xl bg-white border border-secondary/50 p-5 shadow-sm">
+          <dt class="text-sm text-ink/70">Dewasa 15+ dengan gangguan mental-emosional</dt>
+          <dd class="mt-1 font-heading text-3xl font-bold text-primary">19 juta</dd>
+        </div>
+        <div class="rounded-2xl bg-white border border-secondary/50 p-5 shadow-sm">
+          <dt class="text-sm text-ink/70">Yang mencari pengobatan saat depresi</dt>
+          <dd class="mt-1 font-heading text-3xl font-bold text-primary">10,4%</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="masalah" class="py-20 md:py-24 bg-white">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold md:text-4xl text-ink">Bukan cuma soal kamu. Ini soal kita semua.</h2>
+        <p class="mt-4 text-lg text-ink/75">
+          Data I-NAMHS, UNICEF, dan Kementerian Kesehatan bilang hal yang sama: layanan kesehatan mental
+          di Indonesia masih jauh dari yang dibutuhkan. Stigma, biaya, dan jarak bikin banyak orang diam.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <article class="rounded-2xl border border-secondary/50 bg-cream p-6 transition-colors duration-200 hover:border-primary">
+          <i data-lucide="users" class="h-8 w-8 text-primary" aria-hidden="true"></i>
+          <h3 class="mt-4 text-xl font-semibold text-ink">1 dari 3 remaja butuh dukungan</h3>
+          <p class="mt-2 text-ink/75">34,9% remaja Indonesia mengalami masalah kesehatan mental dalam setahun terakhir (I-NAMHS).</p>
+        </article>
+        <article class="rounded-2xl border border-secondary/50 bg-cream p-6 transition-colors duration-200 hover:border-primary">
+          <i data-lucide="trending-up" class="h-8 w-8 text-primary" aria-hidden="true"></i>
+          <h3 class="mt-4 text-xl font-semibold text-ink">Angka dewasa juga naik</h3>
+          <p class="mt-2 text-ink/75">Prevalensi gangguan mental-emosional naik dari 6% (2013) jadi 9,8% penduduk 15+ — sekitar 19 juta orang (Riskesdas 2018).</p>
+        </article>
+        <article class="rounded-2xl border border-secondary/50 bg-cream p-6 transition-colors duration-200 hover:border-primary">
+          <i data-lucide="briefcase" class="h-8 w-8 text-primary" aria-hidden="true"></i>
+          <h3 class="mt-4 text-xl font-semibold text-ink">Kerja ikut terdampak</h3>
+          <p class="mt-2 text-ink/75">Depresi dan kecemasan menelan 12 miliar hari kerja global tiap tahun, setara US$1 triliun (WHO &amp; ILO).</p>
+        </article>
+      </div>
+      <p class="mx-auto mt-10 max-w-2xl rounded-xl bg-secondary/30 p-4 text-center text-ink/80">
+        Di tengah semua itu, cuma <strong>10,4% remaja yang mengalami depresi mencari pengobatan</strong>.
+        Sejiwa ada supaya langkah pertama terasa lebih ringan.
+      </p>
+    </div>
+  </section>
+
+  <section id="fitur" class="py-20 md:py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold md:text-4xl text-ink">Cara Sejiwa menemani kamu</h2>
+        <p class="mt-4 text-lg text-ink/75">Empat langkah sederhana, bisa kapan aja, bisa dari HP kamu sendiri.</p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <article class="rounded-2xl bg-white border border-secondary/50 p-6 shadow-sm transition-colors duration-200 hover:border-primary">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+            <i data-lucide="smile" class="h-6 w-6 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-ink">Check-in emosi harian</h3>
+          <p class="mt-2 text-sm text-ink/75">Seret indikator mood dalam 10 detik. Lama-lama kelihatan pola perasaan kamu.</p>
+        </article>
+        <article class="rounded-2xl bg-white border border-secondary/50 p-6 shadow-sm transition-colors duration-200 hover:border-primary">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+            <i data-lucide="notebook-pen" class="h-6 w-6 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-ink">Jurnal bareng AI yang hangat</h3>
+          <p class="mt-2 text-sm text-ink/75">AI penulis Indonesia yang sabar memancing refleksi — bukan robot kaku, bukan juga terapis.</p>
+        </article>
+        <article class="rounded-2xl bg-white border border-secondary/50 p-6 shadow-sm transition-colors duration-200 hover:border-primary">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+            <i data-lucide="messages-square" class="h-6 w-6 text-primary" aria-hidden="true"></i>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-ink">Teman seperjuangan</h3>
+          <p class="mt-2 text-sm text-ink/75">Grup kecil bermoderasi, cocokkan berdasarkan minat dan topik. Didengar tanpa dihakimi.</p>
+        </article>
+        <article class="rounded-2xl bg-white border border-secondary/50 p-6 shadow-sm transition-colors duration-200 hover:border-primary">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-wellness/10">
+            <i data-lucide="life-buoy" class="h-6 w-6 text-wellness" aria-hidden="true"></i>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-ink">Bantuan darurat, satu ketuk</h3>
+          <p class="mt-2 text-sm text-ink/75">Langsung tersambung ke 119 ext 8 (24 jam) dan layanan rujukan tepercaya.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="segmen" class="py-20 md:py-24 bg-white">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold md:text-4xl text-ink">Untuk semua usia, bukan cuma remaja</h2>
+        <p class="mt-4 text-lg text-ink/75">Isinya menyesuaikan umur dan hidupmu — bahasanya tetap sama: manusiawi.</p>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="rounded-2xl border border-secondary/50 p-6 transition-colors duration-200 hover:border-primary">
+          <span class="font-heading text-sm font-bold text-primary">13–17 TAHUN</span>
+          <h3 class="mt-2 text-lg font-semibold text-ink">Remaja &amp; pelajar</h3>
+          <p class="mt-2 text-sm text-ink/75">Check-in sekolah, tekanan teman sebaya, ruang cerita aman. Kurve izin orang tua tersedia.</p>
+        </article>
+        <article class="rounded-2xl border border-secondary/50 p-6 transition-colors duration-200 hover:border-primary">
+          <span class="font-heading text-sm font-bold text-primary">18–25 TAHUN</span>
+          <h3 class="mt-2 text-lg font-semibold text-ink">Dewasa muda</h3>
+          <p class="mt-2 text-sm text-ink/75">Kuliah, kerja pertama, identitas diri. Jurnal refleksi + peer matching berdasar minat.</p>
+        </article>
+        <article class="rounded-2xl border border-secondary/50 p-6 transition-colors duration-200 hover:border-primary">
+          <span class="font-heading text-sm font-bold text-primary">26–40 TAHUN</span>
+          <h3 class="mt-2 text-lg font-semibold text-ink">Dewasa produktif</h3>
+          <p class="mt-2 text-sm text-ink/75">Stres kerja, keluarga, keuangan. Check-in ringkas 30 detik di sela kesibukan.</p>
+        </article>
+        <article class="rounded-2xl border border-secondary/50 p-6 transition-colors duration-200 hover:border-primary">
+          <span class="font-heading text-sm font-bold text-primary">41+ TAHUN</span>
+          <h3 class="mt-2 text-lg font-semibold text-ink">Orang tua &amp; keluarga</h3>
+          <p class="mt-2 text-sm text-ink/75">Cara mendampingi anak tanpa menghakimi, plus konten kesehatan mental keluarga.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="keamanan" class="py-20 md:py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div>
+          <h2 class="text-3xl font-bold md:text-4xl text-ink">Aman itu bukan fitur tambahan. Ini fondasinya.</h2>
+          <p class="mt-4 text-lg text-ink/75">
+            Kami tahu app AI untuk kesehatan mental sering gagal menjaga penggunanya. Karena itu Sejiwa dibangun
+            dengan standar keamanan berlapis sejak baris kode pertama.
+          </p>
+          <ul class="mt-6 space-y-4">
+            <li class="flex gap-3">
+              <i data-lucide="shield-check" class="h-6 w-6 shrink-0 text-wellness" aria-hidden="true"></i>
+              <span class="text-ink/80"><strong>Deteksi krisis berlapis.</strong> Kata kunci + model AI khusus mendeteksi tanda bahaya, termasuk yang tidak eksplisit.</span>
+            </li>
+            <li class="flex gap-3">
+              <i data-lucide="lock" class="h-6 w-6 shrink-0 text-wellness" aria-hidden="true"></i>
+              <span class="text-ink/80"><strong>Data jurnalmu milikmu.</strong> Enkripsi, tidak dijual, sesuai UU PDP — pengguna di bawah 18 tahun dengan persetujuan orang tua.</span>
+            </li>
+            <li class="flex gap-3">
+              <i data-lucide="user-check" class="h-6 w-6 shrink-0 text-wellness" aria-hidden="true"></i>
+              <span class="text-ink/80"><strong>Peer supporter terlatih.</strong> Kursus active listening, uji kompetensi, dan supervisi berkala — seperti standar 7 Cups.</span>
+            </li>
+            <li class="flex gap-3">
+              <i data-lucide="stethoscope" class="h-6 w-6 shrink-0 text-wellness" aria-hidden="true"></i>
+              <span class="text-ink/80"><strong>Bukan pengganti terapi.</strong> AI tidak mendiagnosis. Kalau butuh penanganan klinis, kamu dirujuk ke profesional.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-3xl bg-white border border-secondary/50 p-8 shadow-sm">
+          <blockquote class="font-heading text-xl leading-relaxed text-ink">
+            “Kami tidak menjanjikan kesembuhan dari layar HP. Kami menjanjikan satu hal: tempat yang aman
+            untuk mulai ngomong — kapan pun kamu siap.”
+          </blockquote>
+          <p class="mt-4 text-sm font-semibold text-primary">Tim Sejiwa</p>
+          <div class="mt-6 flex flex-wrap gap-2 text-xs text-ink/70">
+            <span class="rounded-full bg-cream border border-secondary/60 px-3 py-1">I-NAMHS</span>
+            <span class="rounded-full bg-cream border border-secondary/60 px-3 py-1">UNICEF Indonesia</span>
+            <span class="rounded-full bg-cream border border-secondary/60 px-3 py-1">Kemenkes RI</span>
+            <span class="rounded-full bg-cream border border-secondary/60 px-3 py-1">WHO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-primary" aria-label="Bantuan darurat">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col items-center justify-between gap-6 md:flex-row">
+      <div class="flex items-center gap-4 text-white">
+        <i data-lucide="phone-call" class="h-8 w-8 shrink-0" aria-hidden="true"></i>
+        <div>
+          <p class="font-heading text-xl font-bold">Butuh bantuan sekarang juga?</p>
+          <p class="text-white/85 text-sm">Krisis jiwa 24 jam: <strong>119 ext 8</strong> (gratis, Kemenkes × Into The Light). Gawat darurat: 119. Yayasan Pulih: 021-78842580.</p>
+        </div>
+      </div>
+      <a href="tel:119" class="rounded-full bg-white px-7 py-3 font-semibold text-primary hover:bg-cream transition-colors duration-200 cursor-pointer whitespace-nowrap">
+        Telepon 119 sekarang
+      </a>
+    </div>
+  </section>
+
+  <section id="daftar" class="py-20 md:py-24 bg-white">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="text-3xl font-bold md:text-4xl text-ink">Jadi yang pertama nyoba Sejiwa</h2>
+      <p class="mt-4 text-lg text-ink/75">Isi email kamu, kami kabari waktu soft launch di Jakarta, Bandung, Surabaya, dan Yogyakarta.</p>
+      <form class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row" action="#" method="post" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Terima kasih! ✓';">
+        <label for="email" class="sr-only">Alamat email</label>
+        <input id="email" name="email" type="email" required placeholder="nama@email.com"
+          class="w-full rounded-full border border-secondary bg-cream px-5 py-3.5 text-ink placeholder-ink/50 focus:border-primary focus:outline-none transition-colors duration-200" />
+        <button type="submit" class="rounded-full bg-primary px-7 py-3.5 font-semibold text-white hover:bg-primary/90 transition-colors duration-200 cursor-pointer">
+          Daftar
+        </button>
+      </form>
+      <p class="mt-4 text-sm text-ink/60">Gratis. Tanpa spam. Keluar kapan aja.</p>
+    </div>
+  </section>
+
+  <section id="faq" class="py-20 md:py-24">
+    <div class="mx-auto max-w-3xl px-6">
+      <h2 class="text-center text-3xl font-bold md:text-4xl text-ink">Pertanyaan yang sering muncul</h2>
+      <div class="mt-10 space-y-4">
+        <details class="group rounded-2xl bg-white border border-secondary/50 p-5">
+          <summary class="flex items-center justify-between font-semibold text-ink cursor-pointer">
+            Apakah Sejiwa menggantikan psikolog atau psikiater?
+            <i data-lucide="chevron-down" class="h-5 w-5 text-primary transition-transform duration-200 group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <p class="mt-3 text-ink/75">Tidak. Sejiwa untuk pencegahan dan dukungan sehari-hari. Kalau kamu butuh diagnosis atau terapi, kami bantu rujuk ke profesional.</p>
+        </details>
+        <details class="group rounded-2xl bg-white border border-secondary/50 p-5">
+          <summary class="flex items-center justify-between font-semibold text-ink cursor-pointer">
+            Siapa yang boleh pakai Sejiwa?
+            <i data-lucide="chevron-down" class="h-5 w-5 text-primary transition-transform duration-200 group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <p class="mt-3 text-ink/75">Semua usia 13–40+. Di bawah 18 tahun butuh persetujuan orang tua sesuai UU Perlindungan Data Pribadi.</p>
+        </details>
+        <details class="group rounded-2xl bg-white border border-secondary/50 p-5">
+          <summary class="flex items-center justify-between font-semibold text-ink cursor-pointer">
+            Apakah cerita saya aman?
+            <i data-lucide="chevron-down" class="h-5 w-5 text-primary transition-transform duration-200 group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <p class="mt-3 text-ink/75">Jurnal dienkripsi, tidak dijual ke pihak mana pun, dan bisa kamu hapus kapan saja. Yang tahu hanya kamu — kecuali sistem mendeteksi bahaya terhadap nyawa, di mana kami mengutamakan keselamatanmu.</p>
+        </details>
+        <details class="group rounded-2xl bg-white border border-secondary/50 p-5">
+          <summary class="flex items-center justify-between font-semibold text-ink cursor-pointer">
+            Berapa biayanya?
+            <i data-lucide="chevron-down" class="h-5 w-5 text-primary transition-transform duration-200 group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <p class="mt-3 text-ink/75">Fitur dasar (check-in, jurnal AI, grup peer support, darurat) gratis selamanya. Opsi premium menyusul untuk sesi 1-on-1 mentor dan konten lanjutan.</p>
+        </details>
+        <details class="group rounded-2xl bg-white border border-secondary/50 p-5">
+          <summary class="flex items-center justify-between font-semibold text-ink cursor-pointer">
+            Kapan bisa dipakai?
+            <i data-lucide="chevron-down" class="h-5 w-5 text-primary transition-transform duration-200 group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <p class="mt-3 text-ink/75">Soft launch di Jakarta, Bandung, Surabaya, dan Yogyakarta. Daftar waiting list supaya tidak ketinggalan.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-secondary/50 bg-white py-10">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col items-center justify-between gap-4 md:flex-row">
+      <p class="font-heading text-lg font-bold text-ink">Sejiwa</p>
+      <p class="text-sm text-ink/60 text-center md:text-left">
+        Sejiwa bukan layanan medis, psikiatri, atau krisis. Darurat: 119 ext 8.
+      </p>
+      <p class="text-sm text-ink/60">© 2026 Sejiwa. Dibuat di Indonesia.</p>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
