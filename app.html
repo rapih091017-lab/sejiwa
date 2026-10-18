@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sejiwa — Ruang Harianmu</title>
+  <meta name="description" content="Check-in mood harian, jurnal dengan panduan empatik, dan bantuan darurat. Data tersimpan hanya di perangkatmu." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#7C3AED',
+            secondary: '#A78BFA',
+            wellness: '#059669',
+            cream: '#F5F3FF',
+            ink: '#2E1065',
+          },
+          fontFamily: {
+            heading: ['Lora', 'serif'],
+            body: ['Raleway', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Raleway', sans-serif; background: #F5F3FF; color: #2E1065; }
+    h1, h2, h3 { font-family: 'Lora', serif; }
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+    :focus-visible { outline: 2px solid #7C3AED; outline-offset: 2px; }
+    .bar { transition: height 300ms ease; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <header class="sticky top-0 z-40 border-b border-secondary/50 bg-white/90 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl items-center justify-between px-5 py-3">
+      <a href="index.html" class="flex items-center gap-2 font-heading text-lg font-bold text-ink cursor-pointer">
+        <i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i>
+        Sejiwa
+      </a>
+      <div class="flex items-center gap-3">
+        <span id="bucketBadge" class="hidden rounded-full bg-cream border border-secondary/60 px-3 py-1 text-xs font-semibold text-primary"></span>
+        <button type="button" id="btnEmergencyTop" class="flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors duration-200 cursor-pointer">
+          <i data-lucide="phone-call" class="h-4 w-4" aria-hidden="true"></i>
+          Darurat
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-4xl px-5 pb-32 pt-8">
+
+    <section class="rounded-3xl bg-white border border-secondary/50 p-6 shadow-sm md:p-8" aria-labelledby="judulCheckin">
+      <h1 id="judulCheckin" class="font-heading text-2xl font-bold text-ink md:text-3xl">Hari ini kamu gimana?</h1>
+      <p class="mt-2 text-ink/75" id="greeting">Pilih perasaan yang paling mendekati. Jujur aja, nggak ada nilai.</p>
+      <div id="moodButtons" class="mt-5 flex flex-wrap gap-3" role="group" aria-label="Pilih mood hari ini">
+        <button type="button" data-mood="1" class="mood-btn flex flex-col items-center gap-1 rounded-2xl border-2 border-secondary/50 bg-cream px-4 py-3 text-sm font-medium text-ink hover:border-primary transition-colors duration-200 cursor-pointer">
+          <span class="font-heading text-xl font-bold">1</span> Sangat buruk
+        </button>
+        <button type="button" data-mood="2" class="mood-btn flex flex-col items-center gap-1 rounded-2xl border-2 border-secondary/50 bg-cream px-4 py-3 text-sm font-medium text-ink hover:border-primary transition-colors duration-200 cursor-pointer">
+          <span class="font-heading text-xl font-bold">2</span> Lagi berat
+        </button>
+        <button type="button" data-mood="3" class="mood-btn flex flex-col items-center gap-1 rounded-2xl border-2 border-secondary/50 bg-cream px-4 py-3 text-sm font-medium text-ink hover:border-primary transition-colors duration-200 cursor-pointer">
+          <span class="font-heading text-xl font-bold">3</span> Biasa aja
+        </button>
+        <button type="button" data-mood="4" class="mood-btn flex flex-col items-center gap-1 rounded-2xl border-2 border-secondary/50 bg-cream px-4 py-3 text-sm font-medium text-ink hover:border-primary transition-colors duration-200 cursor-pointer">
+          <span class="font-heading text-xl font-bold">4</span> Lumayan
+        </button>
+        <button type="button" data-mood="5" class="mood-btn flex flex-col items-center gap-1 rounded-2xl border-2 border-secondary/50 bg-cream px-4 py-3 text-sm font-medium text-ink hover:border-primary transition-colors duration-200 cursor-pointer">
+          <span class="font-heading text-xl font-bold">5</span> Baik banget
+        </button>
+      </div>
+      <p id="moodFeedback" class="mt-4 hidden rounded-xl bg-secondary/30 px-4 py-3 text-ink/80"></p>
+
+      <div class="mt-7">
+        <h2 class="font-heading text-lg font-semibold text-ink">Minggu ini</h2>
+        <div id="moodChart" class="mt-3 flex h-36 items-end gap-2" aria-label="Grafik mood 7 hari terakhir"></div>
+        <p class="mt-2 text-xs text-ink/60">Mood 1 (merah hati) sampai 5. Tersimpan lokal di perangkatmu.</p>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl bg-white border border-secondary/50 p-6 shadow-sm md:p-8" aria-labelledby="judulJurnal">
+      <h2 id="judulJurnal" class="font-heading text-2xl font-bold text-ink">Jurnal refleksi</h2>
+      <p id="journalPrompt" class="mt-2 font-heading text-lg italic text-primary"></p>
+      <label for="journalText" class="sr-only">Tulis jurnalmu</label>
+      <textarea id="journalText" rows="5" placeholder="Tulis sejujur mungkin. Tidak ada yang membaca selain dirimu, sampai kamu memilih membagikannya."
+        class="mt-4 w-full rounded-2xl border border-secondary bg-cream p-4 text-ink placeholder-ink/50 focus:border-primary focus:outline-none transition-colors duration-200"></textarea>
+      <div class="mt-3 flex flex-wrap items-center gap-3">
+        <button type="button" id="btnSaveJournal" class="rounded-full bg-wellness px-6 py-2.5 text-sm font-semibold text-white hover:bg-wellness/90 transition-colors duration-200 cursor-pointer">
+          Simpan &amp; refleksikan
+        </button>
+        <button type="button" id="btnNextPrompt" class="rounded-full border-2 border-primary px-5 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
+          Ganti pertanyaan
+        </button>
+      </div>
+      <div id="journalResult" class="mt-4 hidden rounded-2xl p-4"></div>
+    </section>
+
+    <section class="mt-6 rounded-3xl bg-white border border-secondary/50 p-6 shadow-sm md:p-8" aria-labelledby="judulRiwayat">
+      <div class="flex items-center justify-between">
+        <h2 id="judulRiwayat" class="font-heading text-2xl font-bold text-ink">Riwayat jurnal</h2>
+        <button type="button" id="btnClearData" class="text-sm font-semibold text-primary hover:underline transition-colors duration-200 cursor-pointer">
+          Hapus semua data
+        </button>
+      </div>
+      <ul id="journalList" class="mt-4 space-y-3"></ul>
+      <p id="journalEmpty" class="mt-4 text-sm text-ink/60">Belum ada tulisan. Mulai dari satu kalimat aja.</p>
+    </section>
+
+    <section class="mt-6 rounded-3xl bg-secondary/30 border border-secondary/50 p-6 md:p-8" aria-labelledby="judulBantuan">
+      <h2 id="judulBantuan" class="font-heading text-2xl font-bold text-ink">Bantuan sesuai usiamu</h2>
+      <div id="selfHelp" class="mt-4 grid gap-4 sm:grid-cols-2"></div>
+    </section>
+
+    <section class="mt-6 rounded-3xl bg-primary p-6 text-white md:p-8" aria-label="Bantuan darurat">
+      <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+        <div>
+          <p class="font-heading text-xl font-bold">Kalau semakin berat, jangan tahan sendiri.</p>
+          <p class="mt-1 text-white/85 text-sm">Krisis jiwa 24 jam: 119 ext 8 (gratis). Gawat darurat: 119. Yayasan Pulih (chat): 0811-843-6633.</p>
+        </div>
+        <div class="flex gap-3">
+          <a href="tel:119" class="rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary hover:bg-cream transition-colors duration-200 cursor-pointer whitespace-nowrap">Telepon 119</a>
+          <a href="https://wa.me/628118436633" target="_blank" rel="noopener" class="rounded-full border-2 border-white px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer whitespace-nowrap">Chat Yayasan Pulih</a>
+        </div>
+      </div>
+    </section>
+
+    <p class="mt-6 text-center text-xs text-ink/60">
+      Sejiwa bukan layanan medis, psikiatri, atau krisis. Semua datamu disimpan lokal di browser ini — tidak dikirim ke server mana pun.
+    </p>
+  </main>
+
+  <div id="onboarding" class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/60 p-5">
+    <div class="w-full max-w-md rounded-3xl bg-white p-7 shadow-xl" role="dialog" aria-modal="true" aria-labelledby="judulOnboarding">
+      <h2 id="judulOnboarding" class="font-heading text-2xl font-bold text-ink">Kenalan dulu, yuk</h2>
+      <p class="mt-2 text-ink/75">Umur kamu berapa? Kami sesuaikan isi dan bahasanya. Di bawah 18? Sejiwa paling pas dipakai bareng orang tua.</p>
+      <label for="ageInput" class="sr-only">Usia</label>
+      <input id="ageInput" type="number" min="13" max="99" placeholder="misal: 17"
+        class="mt-5 w-full rounded-full border border-secondary bg-cream px-5 py-3 text-ink placeholder-ink/50 focus:border-primary focus:outline-none transition-colors duration-200" />
+      <p id="ageError" class="mt-2 hidden text-sm font-semibold text-primary">Sejiwa untuk usia 13 ke atas, ya.</p>
+      <button type="button" id="btnAgeSave" class="mt-4 w-full rounded-full bg-primary px-6 py-3 font-semibold text-white hover:bg-primary/90 transition-colors duration-200 cursor-pointer">
+        Mulai
+      </button>
+      <p class="mt-3 text-center text-xs text-ink/60">Usia hanya menentukan konten, tidak disimpan di server.</p>
+    </div>
+  </div>
+
+  <div id="crisisModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/70 p-5" role="alertdialog" aria-modal="true" aria-labelledby="judulKrisis">
+    <div class="w-full max-w-lg rounded-3xl bg-white p-7 shadow-xl">
+      <div class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+          <i data-lucide="heart-pulse" class="h-6 w-6 text-primary" aria-hidden="true"></i>
+        </span>
+        <h2 id="judulKrisis" class="font-heading text-xl font-bold text-ink">Kami serius soal keselamatanmu</h2>
+      </div>
+      <p class="mt-3 text-ink/80">
+        Apa yang kamu tulis terdengar berat sekali. Kamu tidak harus melewati ini sendirian.
+        Kalau ada bahaya sekarang, hubungi bantuan darurat lebih dulu.
+      </p>
+      <ol class="mt-4 space-y-2 text-sm text-ink/80">
+        <li><strong>1.</strong> Tarik napas 4 hitungan, tahan 4, buang 6. Ulangi 3 kali.</li>
+        <li><strong>2.</strong> Jauhkan benda berbahaya dari jangkauan, pindah ke ruang lain.</li>
+        <li><strong>3.</strong> Chat atau telepon seseorang sekarang juga — kami sediakan nomornya di bawah.</li>
+      </ol>
+      <div class="mt-5 grid gap-3">
+        <a href="tel:119" class="rounded-full bg-primary px-6 py-3 text-center font-semibold text-white hover:bg-primary/90 transition-colors duration-200 cursor-pointer">Telepon 119 (ext 8 untuk krisis jiwa)</a>
+        <a href="https://wa.me/628118436633" target="_blank" rel="noopener" class="rounded-full border-2 border-primary px-6 py-2.5 text-center font-semibold text-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">Chat Yayasan Pulih (0811-843-6633)</a>
+        <button type="button" id="btnCrisisClose" class="text-sm font-semibold text-ink/70 hover:text-primary transition-colors duration-200 cursor-pointer">Tutup, saya mau lanjut menulis</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/sejiwa.js"></script>
+  <script>
+    var S = window.Sejiwa;
+    var KEYS = { age: 'sejiwa.age', moods: 'sejiwa.moods', journal: 'sejiwa.journal', prompt: 'sejiwa.prompt' };
+    var MOOD_LABELS = { 1: 'Sangat buruk', 2: 'Lagi berat', 3: 'Biasa aja', 4: 'Lumayan', 5: 'Baik banget' };
+    var MOOD_REPLY = {
+      1: 'Terima kasih sudah jujur. Hari berat begitu boleh banget terasa berat. Satu napas dulu, ya.',
+      2: 'Kamu mengakuinya itu sudah langkah besar. Pelan-pelan aja hari ini.',
+      3: 'Biasa aja juga perasaan valid. Sesuatu yang stabil justru sering tak terlihat.',
+      4: 'Wah, ada hijaunya. Apa yang bikin hari ini lumayan?',
+      5: 'Asik! Simpan momen ini, biar ingat saat hari berat datang.'
+    };
+    var EMPATHY = [
+      'Terima kasih sudah menulis ini. Sekadar mengeluarkan ke kepala sudah meringankan sedikit.',
+      'Dibaca, didengar. Perasaanmu valid apa adanya.',
+      'Kamu sudah berani jujur hari itu. Itu tidak kecil.',
+      'Pelan-pelan nggak apa-apa. Yang penting kamu mulai.'
+    ];
+    var SELF_HELP = {
+      '13-17': [
+        ['Atur napas 4-7-8', 'Tarik 4 detik, tahan 7, buang 8. Dua menit menenangkan sistem saraf.'],
+        ['Pilih satu orang', 'Teman, kakak, atau guru — satu orang yang boleh tahu kamu lagi berat.'],
+        ['Jangan scroll jam tidur', 'HP di luar kamar jam 22.00. Kurang tidur memperberat suasana hati.'],
+        ['Tulis 3 hal kecil', 'Hal kecil yang oke hari ini, sekecil apa pun. Otak perlu dilatih melihat yang positif.']
+      ],
+      '18-25': [
+        ['Pisahkan ' + 'kamu' + ' dari produktivitas', 'Nilaimu bukan output hari ini. Istirahat bukan hadiah, itu kebutuhan.'],
+        ['Micro-break 90 menit', 'Berdiri, minum, lihat jendela 2 menit tiap 90 menit kerja/kuliah.'],
+        ['Satu batas minggu ini', 'Satu hal yang kamu tolak demi energi. Mulai dari yang kecil.'],
+        ['Cari teman cerita', 'Peer support lebih efektif daripada-scroll sendirian jam 2 pagi.']
+      ],
+      '26-40': [
+        ['Blok istirahat di kalender', '30 menit non-negosiasi tiap hari. Anggap rapat dengan diri sendiri.'],
+        ['Batas kerja fisik', 'Tutup laptop di jam tertentu. Layar mati = kerja selesai.'],
+        ['Delegasikan satu', 'Satu tugas minggu ini bisa dikerjakan orang lain? Lepas.'],
+        ['Cek lagi yang bisa ditunda', 'Semua wajib sekarang? Tulis ulang daftar, tunda setengahnya.']
+      ],
+      '41+': [
+        ['Jalan pagi 15 menit', 'Cahaya pagi mengatur ritme tidur dan suasana hati.'],
+        ['Ngobrol tatap muka', 'Satu percakapan langsung seminggu lebih menang daripada sekadar grup chat.'],
+        ['Lepas peran sejenak', 'Sejam jadi diri sendiri tanpa jadi orang tua/pekerja/kepala keluarga.'],
+        ['Dampingi tanpa menghakimi', 'Dengarkan anak sampai selesai sebelum memberi solusi.']
+      ]
+    };
+
+    function read(key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) { return fallback; }
+    }
+    function write(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+    }
+    function today() {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+    function fmt(ts) {
+      return new Date(ts).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    var bucket = null;
+    var promptIdx = read(KEYS.prompt, 0);
+
+    function showOnboarding() {
+      var el = document.getElementById('onboarding');
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+    function hideOnboarding() {
+      var el = document.getElementById('onboarding');
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+    function applyBucket(b) {
+      bucket = b;
+      document.getElementById('bucketBadge').textContent = 'Usia ' + b + ' tahun';
+      document.getElementById('bucketBadge').classList.remove('hidden');
+      renderPrompt();
+      renderSelfHelp();
+    }
+    function renderPrompt() {
+      document.getElementById('journalPrompt').textContent = S.nextPrompt(promptIdx, bucket || '18-25');
+    }
+    function renderSelfHelp() {
+      var list = SELF_HELP[bucket] || SELF_HELP['18-25'];
+      var html = '';
+      for (var i = 0; i < list.length; i++) {
+        html += '<article class="rounded-2xl bg-white border border-secondary/50 p-5">' +
+          '<h3 class="font-heading text-lg font-semibold text-ink">' + list[i][0] + '</h3>' +
+          '<p class="mt-2 text-sm text-ink/75">' + list[i][1] + '</p>' +
+          '</article>';
+      }
+      document.getElementById('selfHelp').innerHTML = html;
+    }
+
+    function renderChart() {
+      var moods = read(KEYS.moods, {});
+      var chart = document.getElementById('moodChart');
+      var html = '';
+      for (var i = 6; i >= 0; i += -1) {
+        var d = new Date();
+        d.setDate(d.getDate() - i);
+        var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        var level = moods[key];
+        var h = level ? (level / 5) * 100 : 6;
+        var color = level ? (level <= 2 ? 'bg-primary/70' : level === 3 ? 'bg-secondary' : 'bg-wellness') : 'bg-secondary/30';
+        html += '<div class="flex flex-1 flex-col items-center gap-1">' +
+          '<div class="flex h-28 w-full items-end justify-center">' +
+          '<div class="bar w-full max-w-8 rounded-t-md ' + color + '" style="height:' + h + '%" title="' + (level ? MOOD_LABELS[level] : 'belum diisi') + '"></div>' +
+          '</div>' +
+          '<span class="text-[10px] text-ink/60">' + d.toLocaleDateString('id-ID', { weekday: 'short' }).slice(0, 2) + '</span>' +
+          '</div>';
+      }
+      chart.innerHTML = html;
+    }
+
+    function setMood(level) {
+      var moods = read(KEYS.moods, {});
+      moods[today()] = level;
+      write(KEYS.moods, moods);
+      var fb = document.getElementById('moodFeedback');
+      fb.textContent = MOOD_REPLY[level];
+      fb.classList.remove('hidden');
+      renderChart();
+      if (level <= 2) {
+        fb.textContent += ' Kalau butuh orang bicara: 119 ext 8 (24 jam).';
+      }
+    }
+
+    function renderJournalList() {
+      var entries = read(KEYS.journal, []);
+      var ul = document.getElementById('journalList');
+      var empty = document.getElementById('journalEmpty');
+      if (!entries.length) {
+        ul.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+      var html = '';
+      for (var i = 0; i < entries.length; i += 1) {
+        var e = entries[i];
+        var flag = e.level === 'warning' ? '<span class="rounded-full bg-secondary/40 px-2 py-0.5 text-[10px] font-semibold text-ink">berat</span>' : '';
+        html += '<li class="rounded-2xl border border-secondary/50 bg-cream p-4">' +
+          '<div class="flex items-center justify-between text-xs text-ink/60"><span>' + fmt(e.ts) + '</span>' + flag + '</div>' +
+          '<p class="mt-2 whitespace-pre-wrap text-ink/85">' + e.text.replace(/[<>&]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; }) + '</p>' +
+          '</li>';
+      }
+      ul.innerHTML = html;
+    }
+
+    function showCrisis() {
+      var el = document.getElementById('crisisModal');
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+    function hideCrisis() {
+      var el = document.getElementById('crisisModal');
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+
+    function saveJournal() {
+      var ta = document.getElementById('journalText');
+      var text = ta.value.trim();
+      var box = document.getElementById('journalResult');
+      if (text.length < 3) {
+        box.className = 'mt-4 rounded-2xl p-4 bg-cream border border-secondary/60';
+        box.textContent = 'Tulis sedikit dulu ya, satu kalimat pun cukup.';
+        box.classList.remove('hidden');
+        return;
+      }
+      var verdict = S.detectCrisis(text);
+      var entries = read(KEYS.journal, []);
+      entries.unshift({ ts: Date.now(), text: text, level: verdict.level, matched: verdict.matched });
+      write(KEYS.journal, entries.slice(0, 100));
+      ta.value = '';
+      renderJournalList();
+
+      if (verdict.level === 'crisis') {
+        showCrisis();
+        box.classList.add('hidden');
+        return;
+      }
+      box.className = 'mt-4 rounded-2xl p-4 border';
+      if (verdict.level === 'warning') {
+        box.classList.add('bg-secondary/40', 'border-primary/50');
+        box.innerHTML = 'Terima kasih sudah jujur. Ini terdengar berat — kamu tidak sendirian. ' +
+          'Kalau rasanya makin menekan, 119 ext 8 (24 jam) selalu ada. <a href="tel:119" class="font-semibold text-primary underline cursor-pointer">Telepon sekarang</a>.';
+      } else {
+        box.classList.add('bg-cream', 'border-secondary/60');
+        box.textContent = EMPATHY[Math.floor(Math.random() * EMPATHY.length)];
+      }
+      box.classList.remove('hidden');
+    }
+
+    document.getElementById('btnAgeSave').addEventListener('click', function () {
+      var val = document.getElementById('ageInput').value;
+      var b = S.ageBucket(val);
+      if (!b) {
+        document.getElementById('ageError').classList.remove('hidden');
+        return;
+      }
+      write(KEYS.age, Number(val));
+      hideOnboarding();
+      applyBucket(b);
+    });
+
+    document.querySelectorAll('.mood-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setMood(Number(btn.dataset.mood));
+        document.querySelectorAll('.mood-btn').forEach(function (b) {
+          b.classList.remove('border-primary', 'bg-primary/10');
+        });
+        btn.classList.add('border-primary', 'bg-primary/10');
+      });
+    });
+
+    document.getElementById('btnSaveJournal').addEventListener('click', saveJournal);
+    document.getElementById('btnNextPrompt').addEventListener('click', function () {
+      promptIdx += 1;
+      write(KEYS.prompt, promptIdx);
+      renderPrompt();
+    });
+    document.getElementById('btnClearData').addEventListener('click', function () {
+      if (!confirm('Hapus SEMUA data Sejiwa di browser ini? Tidak bisa dikembalikan.')) return;
+      try {
+        Object.keys(KEYS).forEach(function (k) { localStorage.removeItem(KEYS[k]); });
+      } catch (e) {}
+      location.reload();
+    });
+    document.getElementById('btnEmergencyTop').addEventListener('click', showCrisis);
+    document.getElementById('btnCrisisClose').addEventListener('click', hideCrisis);
+
+    var savedAge = read(KEYS.age, null);
+    var initialBucket = savedAge ? S.ageBucket(savedAge) : null;
+    if (initialBucket) {
+      applyBucket(initialBucket);
+    } else {
+      applyBucket('18-25');
+      showOnboarding();
+    }
+
+    var todayMood = read(KEYS.moods, {})[today()];
+    if (todayMood) {
+      var fb = document.getElementById('moodFeedback');
+      fb.textContent = 'Check-in hari ini sudah tercatat: ' + MOOD_LABELS[todayMood] + '.';
+      fb.classList.remove('hidden');
+      document.querySelectorAll('.mood-btn').forEach(function (b) {
+        if (Number(b.dataset.mood) === todayMood) b.classList.add('border-primary', 'bg-primary/10');
+      });
+    }
+
+    renderChart();
+    renderJournalList();
+    renderPrompt();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
